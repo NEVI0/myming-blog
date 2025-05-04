@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #5644f3;
+  --color-text: #030712;
+  --color-text-light: #4a5565;
+  --color-background: #ffffff;
+}
+
+body {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  outline: none;
+}
