@@ -4,7 +4,7 @@ interface PostProps {}
 
 export default function Post({}: PostProps) {
   return (
-    <Link href="/">
+    <Link href="/post/123">
       <div className="flex flex-col justify-between gap-4 p-6 h-[168px] w-full rounded-3xl overflow-hidden bg-gray-100 hover:bg-gray-200 transition-colors">
         <div className="flex flex-col gap-1">
           <h3 className="text-xl font-medium">Titulo do post</h3>

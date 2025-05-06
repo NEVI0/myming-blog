@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { VerticalDivider } from '@app/components/ui';
 
 const PATH_TRANSLATIONS: Record<string, string> = {
+  post: 'Post',
   posts: 'Posts',
   'create-post': 'Novo post',
   'review-post': 'Revisar post',
