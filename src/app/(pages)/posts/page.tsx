@@ -1,3 +1,13 @@
+import { Breadcrumb } from '@app/components/ui';
+
+import { FoundPosts, Filters } from './components';
+
 export default function Posts() {
-  return <div>Posts</div>;
+  return (
+    <>
+      <Breadcrumb />
+      <Filters />
+      <FoundPosts />
+    </>
+  );
 }
