@@ -19,11 +19,12 @@ export default function Breadcrumb() {
   const items = segments.map((segment, index) => {
     const href = `/${segments.slice(0, index + 1).join('/')}`;
     const isLast = index === segments.length - 1;
+    const page = PATH_TRANSLATIONS[segment];
 
     return (
       <div className="flex items-center gap-4" key={href}>
-        <Link href={href}>{PATH_TRANSLATIONS[segment] || segment}</Link>
-        {!isLast && <VerticalDivider />}
+        <Link href={href}>{page}</Link>
+        {!isLast && !page && <VerticalDivider />}
       </div>
     );
   });

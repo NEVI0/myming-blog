@@ -45,7 +45,7 @@ export default function Header() {
           <VerticalDivider />
 
           <Link
-            href="/account"
+            href="/account/nevio"
             className="h-full flex items-center justify-center font-medium text-primary"
           >
             Minha conta
