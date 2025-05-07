@@ -21,7 +21,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -30,8 +30,10 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
           rel="stylesheet"
         />
       </head>
+
       <body
         className={`${redHatDisplay.className} bg-color-background text-text`}
+        suppressHydrationWarning
       >
         <Header />
         <Content>{children}</Content>
