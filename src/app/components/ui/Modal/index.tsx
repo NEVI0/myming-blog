@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
-import { concatClasses } from '@app/helpers';
+import { useOnClickOutside } from './hooks';
 
 interface ModalProps {
   children: React.ReactNode;
@@ -12,18 +12,22 @@ interface ModalProps {
 }
 
 export default function Modal({ isOpen, onClose, children }: ModalProps) {
+  const modalBoxRef = useRef<HTMLDivElement>(null);
+
+  useOnClickOutside({
+    ref: modalBoxRef,
+    handler: onClose,
+  });
+
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'auto';
   }, [isOpen]);
 
+  if (!isOpen) return null;
+
   return (
-    <dialog
-      className={concatClasses(
-        'fixed top-0 left-0 w-full h-full bg-black/15 transition-transform transform items-center justify-center',
-        isOpen ? 'flex' : 'hidden'
-      )}
-    >
-      {children}
+    <dialog className="fixed top-0 left-0 w-full h-full bg-black/15 backdrop-blur-sm z-50 flex items-center justify-center">
+      <div ref={modalBoxRef}>{children}</div>
     </dialog>
   );
 }
