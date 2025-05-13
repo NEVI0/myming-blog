@@ -3,19 +3,31 @@
 import { useState } from 'react';
 import { OctagonX } from 'lucide-react';
 
+import { UserAbstract } from '@domain/entities';
+
 import { Button, Modal, VerticalDivider } from '@app/components/ui';
 
-export default function User() {
+interface UserProps {
+  user: Omit<UserAbstract, 'toJson'>;
+}
+
+export default function User({ user }: UserProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   return (
     <>
       <section className="flex flex-col md:flex-row md:items-center gap-8 justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-bold">Névio Costa Magagnin</h1>
-          <h2 className="text-xl font-bold text-gray-600">
-            nevio.dev@gmail.com
-          </h2>
+        <div className="flex items-center gap-4">
+          <img
+            src={user.image}
+            alt={`Imagem de perfil de ${user.name}`}
+            className="size-20 rounded-full"
+          />
+
+          <div className="flex flex-col gap-2">
+            <h1 className="text-2xl font-bold">{user.name}</h1>
+            <h2 className="text-xl font-bold text-gray-600">{user.email}</h2>
+          </div>
         </div>
 
         <aside className="flex items-center gap-4">

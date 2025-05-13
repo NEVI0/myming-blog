@@ -14,28 +14,25 @@ export default class FirestoreDatabaseProvider
     collection: string
   ) => {
     const snapshot = await this.db.collection(collection).get();
-    return snapshot.docs.map((doc) => doc.data() as T);
+    return snapshot.docs.map((doc) => doc.data()) as T;
   };
 
   public findById: DatabaseProviderAbstract['findById'] = async <T>(
     collection: string,
     id: string
   ) => {
-    const snapshot = await this.db
-      .collection(collection)
-      .where('id', '==', id)
-      .get();
+    const snapshot = await this.db.collection(collection).doc(id).get();
 
-    if (!snapshot.docs[0]) return null;
-    return snapshot.docs[0].data() as T;
+    if (!snapshot.exists) return null;
+    return snapshot.data() as T;
   };
 
   public create: DatabaseProviderAbstract['create'] = async <T>(
     collection: string,
     data: object
   ) => {
-    const docRef = await this.db.collection(collection).add(data);
-    const doc = await docRef.get();
+    const snapshot = await this.db.collection(collection).add(data);
+    const doc = await snapshot.get();
 
     return doc.data() as T;
   };

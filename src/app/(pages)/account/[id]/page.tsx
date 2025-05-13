@@ -1,4 +1,8 @@
+import { fetchUserByIdAction } from '@app/actions';
 import { Breadcrumb } from '@app/components/ui';
+
+import { redirect } from 'next/navigation';
+
 import { User, Posts } from '../components';
 
 interface ParamsAbstract {
@@ -11,12 +15,16 @@ interface AccountProps {
 
 export default async function Account({ params }: AccountProps) {
   const { id } = await params;
-  console.log({ id });
+  const { user } = await fetchUserByIdAction({ id });
+
+  if (!user) {
+    return redirect('/');
+  }
 
   return (
     <>
       <Breadcrumb />
-      <User />
+      <User user={user.toJson()} />
       <Posts />
     </>
   );
