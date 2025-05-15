@@ -10,7 +10,7 @@ const PATH_TRANSLATIONS: Record<string, string> = {
   posts: 'Posts',
   'create-post': 'Novo post',
   'review-post': 'Revisar post',
-  account: 'Minha conta',
+  account: 'Perfil',
 };
 
 export default function Breadcrumb() {
