@@ -6,6 +6,7 @@ export interface PostAbstract {
   subtitle?: string;
   content: string;
   note?: string;
+  isPublic: boolean;
   author: AuthorAbstract;
   createdAt: string;
   updatedAt: string;
@@ -19,6 +20,7 @@ interface PostProps {
   subtitle?: string;
   content: string;
   note?: string;
+  isPublic: boolean;
   author: {
     id: string;
     name: string;
@@ -33,6 +35,7 @@ export default class Post implements PostAbstract {
   public subtitle: PostAbstract['subtitle'];
   public content: PostAbstract['content'];
   public note: PostAbstract['note'];
+  public isPublic: PostAbstract['isPublic'];
   public author: PostAbstract['author'];
   public createdAt: PostAbstract['createdAt'];
   public updatedAt: PostAbstract['updatedAt'];
@@ -43,6 +46,7 @@ export default class Post implements PostAbstract {
     subtitle = '',
     content,
     note = '',
+    isPublic = true,
     author,
     createdAt = new Date().toISOString(),
     updatedAt = new Date().toISOString(),
@@ -52,6 +56,7 @@ export default class Post implements PostAbstract {
     this.subtitle = subtitle;
     this.content = content;
     this.note = note;
+    this.isPublic = isPublic;
 
     this.author = new Author({
       id: author.id,
@@ -69,6 +74,7 @@ export default class Post implements PostAbstract {
       subtitle: this.subtitle,
       content: this.content,
       note: this.note,
+      isPublic: this.isPublic,
       author: {
         id: this.author.id,
         name: this.author.name,

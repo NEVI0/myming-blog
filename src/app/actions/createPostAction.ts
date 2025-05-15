@@ -10,10 +10,7 @@ const schema = z.object({
   subtitle: z.string().optional(),
   content: z.string(),
   note: z.string().optional(),
-  author: z.object({
-    id: z.string(),
-    name: z.string(),
-  }),
+  isPublic: z.boolean(),
 });
 
 export default async function createPostAction(params: CreatePostDTO) {
@@ -23,7 +20,6 @@ export default async function createPostAction(params: CreatePostDTO) {
 
     return { success: true };
   } catch (error) {
-    console.log(error);
     return { success: false };
   }
 }
