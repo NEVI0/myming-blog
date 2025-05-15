@@ -21,7 +21,7 @@ export default async function User({ user }: UserProps) {
           className="size-20 rounded-full"
         />
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <h1 className="text-2xl font-bold">{user.name}</h1>
           <h2 className="text-xl font-bold text-gray-600">{user.email}</h2>
         </div>
