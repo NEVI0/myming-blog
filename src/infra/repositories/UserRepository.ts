@@ -8,7 +8,7 @@ export default class UserRepository implements UserRepositoryAbstract {
   constructor(private readonly databaseProvider: DatabaseProviderAbstract) {}
 
   public findById: UserRepositoryAbstract['findById'] = async (id) => {
-    const user = await this.databaseProvider.findById<UserAbstract | null>(
+    const user = await this.databaseProvider.findReference<UserAbstract>(
       USER_COLLECTION_NAME,
       id
     );

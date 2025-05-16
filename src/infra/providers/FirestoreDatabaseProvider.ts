@@ -1,7 +1,10 @@
 import 'server-only';
 
-import { DatabaseProviderAbstract } from '@domain/providers';
+import { Query, CollectionReference } from 'firebase-admin/firestore';
 import { firestoreDatabase } from '@configs/firebase';
+
+import { DatabaseProviderAbstract } from '@domain/providers';
+import { FindQuery } from '@domain/providers/DatabaseProvider';
 
 export default class FirestoreDatabaseProvider
   implements DatabaseProviderAbstract
@@ -10,18 +13,53 @@ export default class FirestoreDatabaseProvider
 
   constructor() {}
 
-  public findAll: DatabaseProviderAbstract['findAll'] = async <T>(
-    collection: string
+  public find: DatabaseProviderAbstract['find'] = async <T>(
+    collection: string,
+    query?: FindQuery | FindQuery[]
   ) => {
-    const snapshot = await this.db.collection(collection).get();
-    return snapshot.docs.map((doc) => doc.data()) as T;
+    const hasQueryFilters = !!query || Array.isArray(query);
+
+    if (hasQueryFilters) return this.findByQuery<T>(collection, query);
+    return this.findAll<T>(collection);
   };
 
-  public findById: DatabaseProviderAbstract['findById'] = async <T>(
+  private async findAll<T>(collection: string) {
+    const snapshot = await this.db.collection(collection).get();
+    return snapshot.docs.map((doc) => doc.data()) as T;
+  }
+
+  private async findByQuery<T>(
     collection: string,
-    id: string
+    query: FindQuery | FindQuery[]
+  ) {
+    const snapshot = await this.applyQuery(collection, query).get();
+    return snapshot.docs.map((doc) => doc.data()) as T;
+  }
+
+  private applyQuery(collection: string, query: FindQuery | FindQuery[]) {
+    const isQueryArray = Array.isArray(query);
+    let collectionRef: Query | CollectionReference =
+      this.db.collection(collection);
+
+    if (isQueryArray) {
+      query.forEach((q) => {
+        collectionRef = collectionRef.where(q.field, q.operator, q.value);
+      });
+
+      return collectionRef;
+    }
+
+    return collectionRef.where(query.field, query.operator, query.value);
+  }
+
+  public findReference: DatabaseProviderAbstract['findReference'] = async <T>(
+    collection: string,
+    referenceId: string
   ) => {
-    const snapshot = await this.db.collection(collection).doc(id).get();
+    const snapshot = await this.db
+      .collection(collection)
+      .doc(referenceId)
+      .get();
 
     if (!snapshot.exists) return null;
     return snapshot.data() as T;
