@@ -1,6 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import { redirect } from 'next/navigation';
+
+import { createPostAction } from '@app/actions';
 
 import { Button, Checkbox } from '@app/components/ui';
 import {
@@ -9,7 +12,6 @@ import {
   PostContentInput,
   PostAuthorNoteInput,
 } from './components';
-import { createPostAction } from '@app/actions';
 
 export default function Form() {
   const [title, setTitle] = useState<string>('');
@@ -18,16 +20,34 @@ export default function Form() {
   const [note, setNote] = useState<string | null>(null);
   const [isPublic, setIsPublic] = useState<boolean>(true);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    let redirectPath = '';
 
-    await createPostAction({
-      title,
-      subtitle: subtitle ?? undefined,
-      content,
-      note: note ?? undefined,
-      isPublic,
-    });
+    try {
+      setIsLoading(true);
+
+      const { post } = await createPostAction({
+        title,
+        subtitle: subtitle ?? undefined,
+        content,
+        note: note ?? undefined,
+        isPublic,
+      });
+
+      if (!post) {
+        throw new Error('Erro ao criar post');
+      }
+
+      redirectPath = `/post/${post.id}`;
+    } catch (error) {
+      console.log({ error, message: 'tratamento de erro' });
+    } finally {
+      setIsLoading(false);
+      if (redirectPath) redirect(redirectPath);
+    }
   }
 
   return (
@@ -56,12 +76,12 @@ export default function Form() {
         />
 
         <div className="flex items-center gap-4">
-          <Button variant="default" className="w-[160px]">
+          <Button variant="default" className="w-[160px]" disabled={isLoading}>
             Cancelar
           </Button>
 
-          <Button type="submit" className="w-[160px]">
-            Revisar post
+          <Button type="submit" className="w-[160px]" disabled={isLoading}>
+            {isLoading ? 'Publicando...' : 'Publicar post'}
           </Button>
         </div>
       </section>

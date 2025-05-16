@@ -16,10 +16,10 @@ const schema = z.object({
 export default async function createPostAction(params: CreatePostDTO) {
   try {
     const dto = schema.parse(params);
-    await makeCreatePostUseCase().execute(dto);
+    const post = await makeCreatePostUseCase().execute(dto);
 
-    return { success: true };
+    return { post: post.toJson() };
   } catch (error) {
-    return { success: false };
+    return { post: null };
   }
 }
