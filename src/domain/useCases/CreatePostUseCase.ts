@@ -26,6 +26,10 @@ export default class CreatePostUseCase {
         content: dto.content,
         note: dto.note,
         isPublic: dto.isPublic,
+        feedback: {
+          likes: 0,
+          dislikes: 0,
+        },
         author: {
           id: session.user.id,
           name: session.user.name,

@@ -7,6 +7,10 @@ export interface PostAbstract {
   content: string;
   note?: string;
   isPublic: boolean;
+  feedback: {
+    likes?: number;
+    dislikes?: number;
+  };
   author: AuthorAbstract;
   createdAt: string;
   updatedAt: string;
@@ -21,6 +25,10 @@ interface PostProps {
   content: string;
   note?: string;
   isPublic: boolean;
+  feedback: {
+    likes?: number;
+    dislikes?: number;
+  };
   author: {
     id: string;
     name: string;
@@ -36,6 +44,7 @@ export default class Post implements PostAbstract {
   public content: PostAbstract['content'];
   public note: PostAbstract['note'];
   public isPublic: PostAbstract['isPublic'];
+  public feedback: PostAbstract['feedback'];
   public author: PostAbstract['author'];
   public createdAt: PostAbstract['createdAt'];
   public updatedAt: PostAbstract['updatedAt'];
@@ -47,6 +56,10 @@ export default class Post implements PostAbstract {
     content,
     note = '',
     isPublic = true,
+    feedback = {
+      likes: 0,
+      dislikes: 0,
+    },
     author,
     createdAt = new Date().toISOString(),
     updatedAt = new Date().toISOString(),
@@ -57,6 +70,7 @@ export default class Post implements PostAbstract {
     this.content = content;
     this.note = note;
     this.isPublic = isPublic;
+    this.feedback = feedback;
 
     this.author = new Author({
       id: author.id,
@@ -75,6 +89,7 @@ export default class Post implements PostAbstract {
       content: this.content,
       note: this.note,
       isPublic: this.isPublic,
+      feedback: this.feedback,
       author: {
         id: this.author.id,
         name: this.author.name,

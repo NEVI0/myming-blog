@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { PostAbstract } from '@domain/entities';
+import { Post, PostAbstract } from '@domain/entities';
 import { PostRepositoryAbstract } from '@domain/repositories';
 import { DatabaseProviderAbstract } from '@domain/providers';
 
@@ -10,20 +10,34 @@ export default class PostRepository implements PostRepositoryAbstract {
   constructor(private readonly databaseProvider: DatabaseProviderAbstract) {}
 
   public findAll: PostRepositoryAbstract['findAll'] = async () => {
-    return this.databaseProvider.findAll<PostAbstract[]>(POST_COLLECTION_NAME);
+    const posts = await this.databaseProvider.find<PostAbstract>(
+      POST_COLLECTION_NAME
+    );
+
+    if (!posts || posts.length === 0) return [];
+    return posts.map((post) => new Post(post));
   };
 
   public findById: PostRepositoryAbstract['findById'] = async (id) => {
-    return this.databaseProvider.findById<PostAbstract>(
+    const posts = await this.databaseProvider.find<PostAbstract>(
       POST_COLLECTION_NAME,
-      id
+      {
+        field: 'id',
+        operator: '==',
+        value: id,
+      }
     );
+
+    if (!posts || posts.length === 0) return null;
+    return new Post(posts[0]);
   };
 
   public create: PostRepositoryAbstract['create'] = async (post) => {
-    return this.databaseProvider.create<PostAbstract>(
+    const createdPost = await this.databaseProvider.create<PostAbstract>(
       POST_COLLECTION_NAME,
       post.toJson()
     );
+
+    return new Post(createdPost);
   };
 }
