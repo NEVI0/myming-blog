@@ -24,7 +24,7 @@ export default async function Account({ params }: AccountProps) {
   return (
     <>
       <Breadcrumb />
-      <User user={user.toJson()} />
+      <User user={user} />
       <Posts userId={user.id} />
     </>
   );

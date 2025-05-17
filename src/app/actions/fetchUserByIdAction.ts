@@ -12,9 +12,10 @@ const schema = z.object({
 export default async function fetchUserByIdAction(params: FetchUserByIdDTO) {
   try {
     const dto = schema.parse(params);
-
     const user = await makeFetchUserByIdUseCase().execute(dto);
-    return { user };
+
+    if (!user) return { user: null };
+    return { user: user.toJson() };
   } catch (error) {
     return { user: null };
   }
