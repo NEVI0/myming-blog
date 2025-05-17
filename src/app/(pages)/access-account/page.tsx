@@ -1,7 +1,9 @@
-import { handleUserSessionAction } from '@app/actions';
+'use client';
 
-import { Button } from '@app/components/ui';
 import Link from 'next/link';
+
+import { handleUserSessionAction } from '@app/actions';
+import { Button } from '@app/components/ui';
 
 export default function AccessAccount() {
   return (
@@ -10,6 +12,7 @@ export default function AccessAccount() {
         <h1 className="text-center text-2xl font-bold">
           Ops... parece que você não está logado
         </h1>
+
         <p className="text-center text-gray-600">
           Você precisa estar logado na sua conta para acessar a página e criar
           um post. Clique no botão abaixo para acessar sua conta.
@@ -24,7 +27,7 @@ export default function AccessAccount() {
         </Link>
 
         <Button className="w-[160px]" onClick={handleUserSessionAction}>
-          Acessar conta
+          Posts
         </Button>
       </div>
     </section>
