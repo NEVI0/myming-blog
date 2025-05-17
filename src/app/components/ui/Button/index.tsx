@@ -1,6 +1,6 @@
 import { concatClasses } from '@app/helpers';
 
-type ButtonVariant = 'primary' | 'default' | 'danger';
+export type ButtonVariant = 'primary' | 'default' | 'danger';
 
 interface ButtonProps {
   children: React.ReactNode;
