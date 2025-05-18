@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { FetchPostByIdDTO } from '@domain/dtos';
 import { PostRepositoryAbstract } from '@domain/repositories';
 

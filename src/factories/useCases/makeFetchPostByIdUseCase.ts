@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { FetchPostByIdUseCase } from '@domain/useCases';
 import { makePostRepository } from '@factories/repositories';
 
