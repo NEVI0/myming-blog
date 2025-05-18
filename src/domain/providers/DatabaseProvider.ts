@@ -22,7 +22,16 @@ export default interface DatabaseProviderAbstract {
   find<T>(
     collection: string,
     query?: FindQuery | FindQuery[]
-  ): Promise<T[] | null>;
+  ): {
+    data(): Promise<T[] | null>;
+    paginated(
+      limit?: number,
+      page?: number
+    ): Promise<{
+      data: T[] | null;
+      page: number;
+    }>;
+  };
 
   findReference<T>(collection: string, referenceId: string): Promise<T | null>;
 

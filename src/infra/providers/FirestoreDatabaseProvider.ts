@@ -13,27 +13,40 @@ export default class FirestoreDatabaseProvider
 
   constructor() {}
 
-  public find: DatabaseProviderAbstract['find'] = async <T>(
+  public find: DatabaseProviderAbstract['find'] = <T>(
     collection: string,
     query?: FindQuery | FindQuery[]
   ) => {
     const hasQueryFilters = !!query || Array.isArray(query);
 
-    if (hasQueryFilters) return this.findByQuery<T>(collection, query);
-    return this.findAll<T>(collection);
+    const snapshot = hasQueryFilters
+      ? this.findByQuery(collection, query)
+      : this.findAll(collection);
+
+    return {
+      data: async () => {
+        const data = await snapshot.get();
+        return data.docs.map((doc) => doc.data()) as T;
+      },
+      paginated: async (limit = 10, page = 1) => {
+        const first = await snapshot.limit(limit).get();
+        const last = first.docs[first.docs.length - 1];
+
+        const data = await snapshot.startAt(last).limit(limit).get();
+        return {
+          data: data.docs.map((doc) => doc.data()) as T,
+          page,
+        };
+      },
+    };
   };
 
-  private async findAll<T>(collection: string) {
-    const snapshot = await this.db.collection(collection).get();
-    return snapshot.docs.map((doc) => doc.data()) as T;
+  private findAll(collection: string) {
+    return this.db.collection(collection);
   }
 
-  private async findByQuery<T>(
-    collection: string,
-    query: FindQuery | FindQuery[]
-  ) {
-    const snapshot = await this.applyQuery(collection, query).get();
-    return snapshot.docs.map((doc) => doc.data()) as T;
+  private findByQuery(collection: string, query: FindQuery | FindQuery[]) {
+    return this.applyQuery(collection, query);
   }
 
   private applyQuery(collection: string, query: FindQuery | FindQuery[]) {
