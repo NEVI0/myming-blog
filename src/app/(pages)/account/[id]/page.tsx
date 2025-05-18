@@ -25,7 +25,7 @@ export default async function Account({ params }: AccountProps) {
     <>
       <Breadcrumb />
       <User user={user} />
-      <Posts userId={user.id} />
+      <Posts user={user} />
     </>
   );
 }

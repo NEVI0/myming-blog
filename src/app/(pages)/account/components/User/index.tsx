@@ -14,7 +14,7 @@ export default async function User({ user }: UserProps) {
 
   return (
     <section className="flex flex-col md:flex-row md:items-center gap-8 justify-between">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col md:flex-row items-center gap-4">
         <img
           src={user.image}
           alt={`Imagem de perfil de ${user.name}`}
@@ -22,12 +22,16 @@ export default async function User({ user }: UserProps) {
         />
 
         <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-bold">{user.name}</h1>
-          <h2 className="text-xl font-bold text-gray-600">{user.email}</h2>
+          <h1 className="text-2xl font-bold text-center md:text-left">
+            {user.name}
+          </h1>
+          <h2 className="text-xl font-bold text-center md:text-left text-gray-600">
+            {user.email}
+          </h2>
         </div>
       </div>
 
-      <aside className="flex items-center gap-4">
+      <aside className="flex items-center justify-center gap-4">
         {isOwner && (
           <>
             <DeleteAccountButton />
