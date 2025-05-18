@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { PostAbstract } from '@domain/entities';
+import { limitContentCharacters } from './helpers';
 
 interface PostProps {
   post: Omit<PostAbstract, 'toJson'>;
@@ -13,7 +14,9 @@ export default function Post({ post }: PostProps) {
         <div className="flex flex-col gap-1">
           <h3 className="text-xl font-medium">{post.title}</h3>
 
-          <p className="text-sm text-gray-600">{post.content}</p>
+          <p className="text-sm text-gray-600">
+            {limitContentCharacters(post.content)}
+          </p>
         </div>
 
         <div className="flex items-center justify-between">
