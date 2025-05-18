@@ -15,6 +15,7 @@ const BUTTON_VARIANT: Record<ButtonVariant, string> = {
 
 export default function Button({
   children,
+  type = 'button',
   variant = 'primary',
   ...props
 }: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
