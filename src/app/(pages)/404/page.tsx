@@ -1,18 +1,32 @@
 import Link from 'next/link';
 
-export default function NotFound() {
+import { ANIMATIONS } from '@app/constants/animations';
+import { Animation, Button } from '@app/components/ui';
+
+export default function NotFount() {
   return (
-    <main className="flex flex-col items-center justify-center gap-8 w-full h-full bg-background">
-      <div className="flex flex-col items-center justify-center gap-4">
-        <h1 className="text-4xl font-bold">Ops... página não encontrada</h1>
-        <p className="text-gray-600">
-          Parece que a página que você está procurando não existe.
+    <section className="flex flex-col items-center justify-center flex-1 gap-8">
+      <Animation
+        animation={ANIMATIONS.PAGE_404}
+        height={400}
+        width={400}
+        loop={false}
+      />
+
+      <div className="flex flex-col items-center justify-center gap-2 w-full md:w-1/2">
+        <h1 className="text-center text-2xl font-bold">
+          Ops... página não encontrada!
+        </h1>
+
+        <p className="text-center text-gray-600">
+          Tem certeza que está tentando acessar o link certo? Qualquer coisa
+          clique no link abaixo para voltar ao início.
         </p>
       </div>
 
-      <Link href="/" className="text-primary font-medium">
-        Voltar para a página inicial
+      <Link href="/">
+        <Button className="w-[160px]">Voltar ao início</Button>
       </Link>
-    </main>
+    </section>
   );
 }
