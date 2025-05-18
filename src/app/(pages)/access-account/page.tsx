@@ -3,11 +3,15 @@
 import Link from 'next/link';
 
 import { handleUserSessionAction } from '@app/actions';
-import { Button } from '@app/components/ui';
+import { ANIMATIONS } from '@app/constants/animations';
+
+import { Animation, Button } from '@app/components/ui';
 
 export default function AccessAccount() {
   return (
     <section className="flex flex-col items-center justify-center flex-1 gap-8">
+      <Animation animation={ANIMATIONS.LOGIN} height={200} width={200} />
+
       <div className="flex flex-col items-center justify-center gap-2 w-full md:w-1/2">
         <h1 className="text-center text-2xl font-bold">
           Ops... parece que você não está logado
