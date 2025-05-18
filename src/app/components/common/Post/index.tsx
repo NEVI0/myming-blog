@@ -1,24 +1,28 @@
 import Link from 'next/link';
 
-interface PostProps {}
+import { PostAbstract } from '@domain/entities';
 
-export default function Post({}: PostProps) {
+interface PostProps {
+  post: Omit<PostAbstract, 'toJson'>;
+}
+
+export default function Post({ post }: PostProps) {
   return (
-    <Link href="/post/123">
+    <Link href={`/post/${post.id}`}>
       <div className="flex flex-col justify-between gap-4 p-6 h-[168px] w-full rounded-3xl overflow-hidden bg-gray-100 hover:bg-gray-200 transition-colors">
         <div className="flex flex-col gap-1">
-          <h3 className="text-xl font-medium">Titulo do post</h3>
+          <h3 className="text-xl font-medium">{post.title}</h3>
 
-          <p className="text-sm text-gray-600">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            vulputate tristique massa, in lacinia purus vehicula id. Etiam porta
-            rhoncus massa id suscipit...
-          </p>
+          <p className="text-sm text-gray-600">{post.content}</p>
         </div>
 
         <div className="flex items-center justify-between">
-          <small className="text-sm text-gray-600">Por Nome do Autor</small>
-          <small className="text-sm text-gray-600">24 curtidas</small>
+          <small className="text-sm text-gray-600">
+            Por {post.author.name}
+          </small>
+          <small className="text-sm text-gray-600">
+            {post.feedback.likes} curtidas
+          </small>
         </div>
       </div>
     </Link>
