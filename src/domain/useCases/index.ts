@@ -1,4 +1,7 @@
 export { default as CreatePostUseCase } from './CreatePostUseCase';
+export { default as DeleteAccountUseCase } from './DeleteAccountUseCase';
+export { default as DeletePostByIdUseCase } from './DeletePostByIdUseCase';
 export { default as FetchPostByIdUseCase } from './FetchPostByIdUseCase';
 export { default as FetchPostsByAuthorUseCase } from './FetchPostsByAuthorUseCase';
+export { default as FetchPostsUseCase } from './FetchPostsUseCase';
 export { default as FetchUserByIdUseCase } from './FetchUserByIdUseCase';

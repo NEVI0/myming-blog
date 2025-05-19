@@ -4,6 +4,7 @@ import { PostAbstract } from '@domain/entities';
 
 export interface FindAllFilters {
   search?: string;
+  public?: boolean;
   author?: {
     id: string;
   };
@@ -15,5 +16,6 @@ export default interface PostRepositoryAbstract {
 
   create(post: PostAbstract): Promise<PostAbstract>;
   // update(post: PostAbstract): Promise<PostAbstract>;
-  // delete(post: PostAbstract): Promise<void>;
+  deleteById(id: string): Promise<void>;
+  deleteByAuthorId(id: string): Promise<void>;
 }
