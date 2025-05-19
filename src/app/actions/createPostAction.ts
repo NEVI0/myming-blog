@@ -6,9 +6,9 @@ import { CreatePostDTO } from '@domain/dtos';
 import { makeCreatePostUseCase } from '@factories/useCases';
 
 const schema = z.object({
-  title: z.string(),
+  title: z.string().nonempty(),
   subtitle: z.string().optional(),
-  content: z.string(),
+  content: z.string().nonempty(),
   note: z.string().optional(),
   isPublic: z.boolean(),
 });
