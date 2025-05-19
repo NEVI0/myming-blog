@@ -41,6 +41,68 @@ export default class FirestoreDatabaseProvider
     };
   };
 
+  public findReference: DatabaseProviderAbstract['findReference'] = async <T>(
+    collection: string,
+    referenceId: string
+  ) => {
+    const snapshot = await this.db
+      .collection(collection)
+      .doc(referenceId)
+      .get();
+
+    if (!snapshot.exists) return null;
+    return snapshot.data() as T;
+  };
+
+  public create: DatabaseProviderAbstract['create'] = async <T>(
+    collection: string,
+    data: object
+  ) => {
+    const snapshot = await this.db.collection(collection).add(data);
+    const doc = await snapshot.get();
+
+    return doc.data() as T;
+  };
+
+  public deleteOne: DatabaseProviderAbstract['deleteOne'] = async (
+    collection: string,
+    query: FindQuery
+  ) => {
+    const snapshot = await this.db
+      .collection(collection)
+      .where(query.field, query.operator, query.value)
+      .limit(1)
+      .get();
+
+    const [docRef] = snapshot.docs;
+    if (!docRef) throw Error('Database document not found!');
+
+    await this.db.collection(collection).doc(docRef.id).delete();
+  };
+
+  public deleteMany: DatabaseProviderAbstract['deleteMany'] = async (
+    collection: string,
+    query: FindQuery
+  ) => {
+    const snapshot = await this.db
+      .collection(collection)
+      .where(query.field, query.operator, query.value)
+      .get();
+
+    const promises: Promise<any>[] = [];
+
+    snapshot.docs.forEach((doc) => {
+      promises.push(this.db.collection(collection).doc(doc.id).delete());
+    });
+
+    await Promise.all(promises);
+  };
+
+  public deleteByReference: DatabaseProviderAbstract['deleteByReference'] =
+    async (collection: string, referenceId: string) => {
+      await this.db.collection(collection).doc(referenceId).delete();
+    };
+
   private findAll(collection: string) {
     return this.db.collection(collection);
   }
@@ -64,27 +126,4 @@ export default class FirestoreDatabaseProvider
 
     return collectionRef.where(query.field, query.operator, query.value);
   }
-
-  public findReference: DatabaseProviderAbstract['findReference'] = async <T>(
-    collection: string,
-    referenceId: string
-  ) => {
-    const snapshot = await this.db
-      .collection(collection)
-      .doc(referenceId)
-      .get();
-
-    if (!snapshot.exists) return null;
-    return snapshot.data() as T;
-  };
-
-  public create: DatabaseProviderAbstract['create'] = async <T>(
-    collection: string,
-    data: object
-  ) => {
-    const snapshot = await this.db.collection(collection).add(data);
-    const doc = await snapshot.get();
-
-    return doc.data() as T;
-  };
 }

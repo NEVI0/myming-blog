@@ -15,7 +15,7 @@ type FindQueryOperator =
 export interface FindQuery {
   field: string;
   operator: FindQueryOperator;
-  value: string;
+  value: string | number | boolean;
 }
 
 export default interface DatabaseProviderAbstract {
@@ -36,4 +36,9 @@ export default interface DatabaseProviderAbstract {
   findReference<T>(collection: string, referenceId: string): Promise<T | null>;
 
   create<T>(collection: string, data: object): Promise<T>;
+
+  deleteOne(collection: string, query: FindQuery): Promise<void>;
+  deleteMany(collection: string, query: FindQuery): Promise<void>;
+
+  deleteByReference(collection: string, referenceId: string): Promise<void>;
 }
