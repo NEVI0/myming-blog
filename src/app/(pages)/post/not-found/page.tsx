@@ -1,11 +1,20 @@
 'use client';
 
-import { Button } from '@app/components/ui';
 import Link from 'next/link';
+
+import { ANIMATIONS } from '@app/constants/animations';
+import { Animation, Button } from '@app/components/ui';
 
 export default function PostNotFound() {
   return (
     <section className="flex flex-col items-center justify-center flex-1 gap-8">
+      <Animation
+        animation={ANIMATIONS.NOT_FOUND}
+        height={200}
+        width={200}
+        loop={false}
+      />
+
       <div className="flex flex-col items-center justify-center gap-2 w-full md:w-1/2">
         <h1 className="text-center text-2xl font-bold">
           Post não encontrado...
