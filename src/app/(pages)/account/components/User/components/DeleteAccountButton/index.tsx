@@ -1,12 +1,30 @@
 'use client';
 
 import { useState } from 'react';
+import { redirect } from 'next/navigation';
 import { OctagonX } from 'lucide-react';
 
+import { deleteAccountAction } from '@app/actions';
 import { Button, Modal } from '@app/components/ui';
 
 export default function DeleteAccountButton() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  async function handleDeleteAccount() {
+    let redirectPath = '';
+
+    try {
+      setIsLoading(true);
+      await deleteAccountAction();
+
+      redirectPath = '/';
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+      if (redirectPath) redirect(redirectPath);
+    }
+  }
 
   return (
     <>
@@ -31,13 +49,19 @@ export default function DeleteAccountButton() {
             <Button
               variant="default"
               className="w-full"
+              disabled={isLoading}
               onClick={() => setIsModalOpen(false)}
             >
               Cancelar
             </Button>
 
-            <Button variant="danger" className="w-full">
-              Excluir
+            <Button
+              variant="danger"
+              className="w-full"
+              disabled={isLoading}
+              onClick={handleDeleteAccount}
+            >
+              {isLoading ? 'Excluindo...' : 'Excluir'}
             </Button>
           </div>
         </div>
