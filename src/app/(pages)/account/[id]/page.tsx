@@ -18,7 +18,7 @@ export default async function Account({ params }: AccountProps) {
   const { user } = await fetchUserByIdAction({ id });
 
   if (!user) {
-    return redirect('/');
+    return redirect('/account/not-found');
   }
 
   return (
