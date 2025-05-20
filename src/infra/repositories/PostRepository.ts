@@ -84,7 +84,7 @@ export default class PostRepository implements PostRepositoryAbstract {
     }
     if (filters.public) {
       query.push({
-        field: 'public',
+        field: 'isPublic',
         operator: '==',
         value: filters.public,
       });
