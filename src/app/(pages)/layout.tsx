@@ -33,7 +33,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
       </head>
 
       <body
-        className={`${redHatDisplay.className} bg-color-background text-text`}
+        className={`${redHatDisplay.className} bg-color-background text-gray-950`}
         suppressHydrationWarning
       >
         <Header />
