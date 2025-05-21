@@ -3,7 +3,7 @@ import 'server-only';
 import { Session } from '@domain/entities';
 import { SessionProviderAbstract } from '@domain/providers';
 
-import { useAuth } from '@configs/auth';
+import { auth } from '@configs/auth';
 
 export default class NextAuthSessionProvider
   implements SessionProviderAbstract
@@ -11,7 +11,7 @@ export default class NextAuthSessionProvider
   constructor() {}
 
   public session: SessionProviderAbstract['session'] = async () => {
-    const session = await useAuth();
+    const session = await auth();
 
     if (!session || !session.user) return null;
 

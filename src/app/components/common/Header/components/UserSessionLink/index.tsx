@@ -1,10 +1,9 @@
 import Link from 'next/link';
 
-import { useAuth } from '@configs/auth';
-import { handleUserSessionAction } from '@app/actions';
+import { handleUserSessionAction, fetchUserSession } from '@app/actions';
 
 export default async function UserSessionLink() {
-  const session = await useAuth();
+  const session = await fetchUserSession();
 
   return !!session ? (
     <Link
@@ -14,11 +13,13 @@ export default async function UserSessionLink() {
       Minha conta
     </Link>
   ) : (
-    <button
-      className="h-full flex items-center justify-center font-medium text-primary"
-      onClick={handleUserSessionAction}
-    >
-      Entrar em minha conta
-    </button>
+    <form action={handleUserSessionAction}>
+      <button
+        type="submit"
+        className="h-full flex items-center justify-center font-medium text-primary"
+      >
+        Entrar em minha conta
+      </button>
+    </form>
   );
 }

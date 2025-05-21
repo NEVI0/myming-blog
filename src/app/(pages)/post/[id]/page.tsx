@@ -1,8 +1,8 @@
 import { redirect } from 'next/navigation';
-import { fetchPostByIdAction } from '@app/actions';
+import { fetchPostByIdAction, fetchUserSession } from '@app/actions';
 
 import { Breadcrumb } from '@app/components/ui';
-import { Content, Feedback } from '../components';
+import { Content, Feedback, OwnerActions } from '../components';
 
 interface ParamsAbstract {
   id: string;
@@ -13,16 +13,20 @@ interface PostProps {
 }
 
 export default async function Post({ params }: PostProps) {
+  const session = await fetchUserSession();
+
   const { id } = await params;
   const { post } = await fetchPostByIdAction({ id });
 
   if (!post) return redirect('/post/not-found');
 
+  const isOwner = session?.user?.id === post.author.id;
+
   return (
     <>
       <Breadcrumb />
       <Content post={post} />
-      <Feedback />
+      {isOwner ? <OwnerActions post={post} /> : <Feedback />}
     </>
   );
 }

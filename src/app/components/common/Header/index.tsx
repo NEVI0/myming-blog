@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { IconButton, VerticalDivider } from '@app/components/ui';
+import { VerticalDivider } from '@app/components/ui';
 import { MobileMenu, UserSessionLink } from './components';
 
 export default function Header() {
