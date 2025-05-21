@@ -32,13 +32,12 @@ export default interface DatabaseProviderAbstract {
       page: number;
     }>;
   };
-
   findReference<T>(collection: string, referenceId: string): Promise<T | null>;
 
   create<T>(collection: string, data: object): Promise<T>;
+  updateOne<T>(collection: string, query: FindQuery, data: object): Promise<T>;
 
   deleteOne(collection: string, query: FindQuery): Promise<void>;
   deleteMany(collection: string, query: FindQuery): Promise<void>;
-
   deleteByReference(collection: string, referenceId: string): Promise<void>;
 }

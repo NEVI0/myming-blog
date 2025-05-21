@@ -15,7 +15,8 @@ export default interface PostRepositoryAbstract {
   findById(id: string): Promise<PostAbstract | null>;
 
   create(post: PostAbstract): Promise<PostAbstract>;
-  // update(post: PostAbstract): Promise<PostAbstract>;
+  update(post: PostAbstract): Promise<PostAbstract>;
+
   deleteById(id: string): Promise<void>;
   deleteByAuthorId(id: string): Promise<void>;
 }

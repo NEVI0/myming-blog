@@ -4,3 +4,4 @@ export type { default as FetchPostByIdDTO } from './FetchPostByIdDTO';
 export type { default as FetchPostsByAuthorDTO } from './FetchPostsByAuthorDTO';
 export type { default as FetchPostsDTO } from './FetchPostsDTO';
 export type { default as FetchUserByIdDTO } from './FetchUserByIdDTO';
+export type { default as GivePostFeedbackDTO } from './GivePostFeedbackDTO';

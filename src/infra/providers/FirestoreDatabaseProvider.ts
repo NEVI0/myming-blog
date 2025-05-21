@@ -64,6 +64,24 @@ export default class FirestoreDatabaseProvider
     return doc.data() as T;
   };
 
+  public updateOne: DatabaseProviderAbstract['updateOne'] = async <T>(
+    collection: string,
+    query: FindQuery,
+    data: object
+  ) => {
+    const snapshot = await this.db
+      .collection(collection)
+      .where(query.field, query.operator, query.value)
+      .limit(1)
+      .get();
+
+    const [docRef] = snapshot.docs;
+    if (!docRef) throw Error('Database document not found!');
+
+    await this.db.collection(collection).doc(docRef.id).update(data);
+    return docRef.data() as T;
+  };
+
   public deleteOne: DatabaseProviderAbstract['deleteOne'] = async (
     collection: string,
     query: FindQuery

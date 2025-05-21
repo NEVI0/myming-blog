@@ -5,3 +5,4 @@ export { default as FetchPostByIdUseCase } from './FetchPostByIdUseCase';
 export { default as FetchPostsByAuthorUseCase } from './FetchPostsByAuthorUseCase';
 export { default as FetchPostsUseCase } from './FetchPostsUseCase';
 export { default as FetchUserByIdUseCase } from './FetchUserByIdUseCase';
+export { default as GivePostFeedbackUseCase } from './GivePostFeedbackUseCase';

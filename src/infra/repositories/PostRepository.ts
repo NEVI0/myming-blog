@@ -47,6 +47,20 @@ export default class PostRepository implements PostRepositoryAbstract {
     return new Post(createdPost);
   };
 
+  public update: PostRepositoryAbstract['update'] = async (post) => {
+    const updatedPost = await this.databaseProvider.updateOne<PostAbstract>(
+      POST_COLLECTION_NAME,
+      {
+        field: 'id',
+        operator: '==',
+        value: post.id,
+      },
+      post.toJson()
+    );
+
+    return new Post(updatedPost);
+  };
+
   public deleteById: PostRepositoryAbstract['deleteById'] = async (id) => {
     await this.databaseProvider.deleteOne(POST_COLLECTION_NAME, {
       field: 'id',
