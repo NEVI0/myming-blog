@@ -1,5 +1,5 @@
-import { concatClasses } from '@app/helpers';
 import { Check } from 'lucide-react';
+import { concatClasses } from '@app/helpers';
 
 interface CheckboxProps {
   id: string;
@@ -17,6 +17,7 @@ export default function Checkbox({
   return (
     <div className="flex items-center gap-4 cursor-pointer">
       <div
+        onClick={() => onToggle(!checked)}
         className={concatClasses(
           'w-6 h-6 border border-gray-300 rounded-md flex items-center justify-center',
           checked && 'bg-primary border-primary text-white'
