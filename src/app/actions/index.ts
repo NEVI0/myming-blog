@@ -6,3 +6,4 @@ export { default as fetchPostsAction } from './fetchPostsAction';
 export { default as fetchPostsByAuthorAction } from './fetchPostsByAuthorAction';
 export { default as fetchUserByIdAction } from './fetchUserByIdAction';
 export { default as handleUserSessionAction } from './handleUserSessionAction';
+export { default as fetchUserSession } from './fetchUserSession';
