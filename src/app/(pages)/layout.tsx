@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Red_Hat_Display } from 'next/font/google';
 
 import { Header, Content, Footer } from '@app/components/common';
+import { Toast } from '@app/components/ui';
 
 import './globals.css';
 
@@ -38,6 +39,8 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
         <Header />
         <Content>{children}</Content>
         <Footer />
+
+        <Toast />
       </body>
     </html>
   );
