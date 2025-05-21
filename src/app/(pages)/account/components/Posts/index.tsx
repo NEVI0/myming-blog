@@ -1,21 +1,19 @@
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
 
-import { useAuth } from '@configs/auth';
-
-import { fetchPostsByAuthorAction } from '@app/actions';
-
 import { UserAbstract } from '@domain/entities';
+import { ANIMATIONS } from '@app/constants/animations';
+import { fetchPostsByAuthorAction, fetchUserSession } from '@app/actions';
+
 import { Post, Section } from '@app/components/common';
 import { Animation, Button } from '@app/components/ui';
-import { ANIMATIONS } from '@app/constants/animations';
 
 interface PostsProps {
   user: Omit<UserAbstract, 'toJson'>;
 }
 
 export default async function Posts({ user }: PostsProps) {
-  const session = await useAuth();
+  const session = await fetchUserSession();
 
   const { posts } = await fetchPostsByAuthorAction({
     author: {
@@ -25,7 +23,7 @@ export default async function Posts({ user }: PostsProps) {
 
   const isOwner = session?.user?.id === user.id;
 
-  if (posts.length === 0) {
+  if (!posts.length) {
     return (
       <Section title="Puplicações">
         <div className="flex flex-col items-center justify-center gap-8">

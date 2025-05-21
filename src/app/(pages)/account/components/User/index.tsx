@@ -1,5 +1,5 @@
-import { useAuth } from '@configs/auth';
 import { UserAbstract } from '@domain/entities';
+import { fetchUserSession } from '@app/actions';
 
 import { VerticalDivider } from '@app/components/ui';
 import { DeleteAccountButton, SignOutButton } from './components';
@@ -9,7 +9,7 @@ interface UserProps {
 }
 
 export default async function User({ user }: UserProps) {
-  const session = await useAuth();
+  const session = await fetchUserSession();
   const isOwner = session?.user?.id === user.id;
 
   return (
