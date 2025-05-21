@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 import { createPostAction } from '@app/actions';
 
@@ -14,6 +14,8 @@ import {
 } from './components';
 
 export default function Form() {
+  const router = useRouter();
+
   const [title, setTitle] = useState<string>('');
   const [subtitle, setSubtitle] = useState<string | null>(null);
   const [content, setContent] = useState<string>('');
@@ -76,7 +78,13 @@ export default function Form() {
         />
 
         <div className="flex items-center gap-4">
-          <Button variant="default" className="w-[160px]" disabled={isLoading}>
+          <Button
+            type="button"
+            variant="default"
+            className="w-[160px]"
+            disabled={isLoading}
+            onClick={router.back}
+          >
             Cancelar
           </Button>
 
