@@ -14,7 +14,7 @@ export default async function fetchPostsAction(params: FetchPostsDTO) {
     const dto = schema.parse(params);
     const posts = await makeFetchPostsUseCase().execute(dto);
 
-    return { posts };
+    return { posts: posts.map((post) => post.toJson()) };
   } catch (error) {
     return { posts: [] };
   }
