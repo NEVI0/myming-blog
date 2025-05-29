@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import { POST } from '@app/constants/post';
 
 interface PostContentInputProps {
   value: string;
@@ -20,14 +21,25 @@ export default function PostContentInput({
     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
   }
 
+  const isValid = value.length >= POST.MIN_CONTENT_LENGTH;
+
   return (
-    <textarea
-      ref={textareaRef}
-      onKeyUp={handleTextareaHeight}
-      className="placeholder-gray-400 min-h-[252px] resize-none overflow-hidden"
-      placeholder="Digite aqui o conteúdo do seu post, você pode adicionar textos em negrito, itálico e outras formatações nos botões fixados na parte inferior da tela"
-      value={value}
-      onChange={(event) => onChange(event.target.value)}
-    />
+    <div className="w-full flex flex-col gap-4">
+      <textarea
+        ref={textareaRef}
+        onKeyUp={handleTextareaHeight}
+        className="placeholder-gray-400 min-h-[252px] resize-none overflow-hidden"
+        placeholder="Digite aqui o conteúdo do seu post..."
+        value={value}
+        minLength={POST.MIN_CONTENT_LENGTH}
+        onChange={(event) => onChange(event.target.value)}
+      />
+
+      <small className="text-sm text-gray-600">
+        {isValid
+          ? 'Quantidade mínima de caracteres atingida!'
+          : `Aumente seu conteúdo para ${POST.MIN_CONTENT_LENGTH} caracteres. No momento tem ${value.length} caracteres.`}
+      </small>
+    </div>
   );
 }
