@@ -31,7 +31,7 @@ export default function AccessAccount() {
         </Link>
 
         <Button className="w-[160px]" onClick={handleUserSessionAction}>
-          Posts
+          Acessar conta
         </Button>
       </div>
     </section>
