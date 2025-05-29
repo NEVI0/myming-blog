@@ -12,7 +12,7 @@ interface OwnerActionsProps {
 }
 
 export default function OwnerActions({ post }: OwnerActionsProps) {
-  const [isPublic, setIsPublic] = useState<boolean>(true);
+  const [isPublic, setIsPublic] = useState<boolean>(post.isPublic);
 
   return (
     <section className="flex items-center justify-between">
@@ -25,7 +25,7 @@ export default function OwnerActions({ post }: OwnerActionsProps) {
 
       <div className="flex items-center gap-4">
         <Button variant="default" className="w-[160px]">
-          Cancelar
+          Editar
         </Button>
 
         <DeletePostButton post={post} />
