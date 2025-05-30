@@ -6,7 +6,7 @@ export default async function handleUserSessionAction() {
   const session = await auth();
 
   if (!session) {
-    return await signIn('google', { redirectTo: '/' });
+    return await signIn('google', { redirectTo: '/redirect-to-account' });
   }
 
   return await signOut({ redirectTo: '/' });
