@@ -70,7 +70,7 @@ export default function Content() {
         title="Posts encontrados"
         actions={
           <button
-            className="h-full text-right font-medium text-primary"
+            className="h-full text-right font-medium text-primary cursor-pointer"
             onClick={handleClearFilters}
           >
             Limpar filtros
