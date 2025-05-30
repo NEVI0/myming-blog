@@ -26,7 +26,8 @@ export default async function Post({ params }: PostProps) {
     <>
       <Breadcrumb />
       <Content post={post} />
-      {isOwner ? <OwnerActions post={post} /> : <Feedback />}
+
+      {isOwner ? <OwnerActions post={post} /> : <Feedback post={post} />}
     </>
   );
 }

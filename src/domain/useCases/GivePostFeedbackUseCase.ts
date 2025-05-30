@@ -1,23 +1,20 @@
 import 'server-only';
 
-import { Post } from '@domain/entities';
 import { GivePostFeedbackDTO } from '@domain/dtos';
-import { PostRepositoryAbstract } from '@domain/repositories';
+import { PostFeedbackRepositoryAbstract } from '@domain/repositories';
 
 export default class GivePostFeedbackUseCase {
-  constructor(private readonly postRepository: PostRepositoryAbstract) {}
+  constructor(
+    private readonly postFeedbackRepository: PostFeedbackRepositoryAbstract
+  ) {}
 
   public async execute(dto: GivePostFeedbackDTO) {
-    const { post, feedback } = dto;
+    const { postId, feedback } = dto;
 
-    return await this.postRepository.update(
-      new Post({
-        ...post,
-        feedback: {
-          ...post.feedback,
-          [feedback]: (post.feedback[feedback] ?? 0) + 1,
-        },
-      })
-    );
+    if (feedback === 'likes') {
+      await this.postFeedbackRepository.like(postId);
+    } else {
+      await this.postFeedbackRepository.dislike(postId);
+    }
   }
 }
