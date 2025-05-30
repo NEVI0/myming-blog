@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { SessionAbstract } from '@domain/entities';
 
 export default interface SessionProviderAbstract {

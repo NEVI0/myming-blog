@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { PostFeedbackRepository } from '@infra/repositories';
 import { makeDatabaseProvider } from '@factories/providers';
 

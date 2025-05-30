@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { User } from '@domain/entities';
 
 export default interface UserRepositoryAbstract {

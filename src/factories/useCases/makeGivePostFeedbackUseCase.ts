@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { GivePostFeedbackUseCase } from '@domain/useCases';
 import { makePostFeedbackRepository } from '@factories/repositories';
 

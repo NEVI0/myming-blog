@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { User, UserAbstract } from '@domain/entities';
 import { UserRepositoryAbstract } from '@domain/repositories';
 import { DatabaseProviderAbstract } from '@domain/providers';
