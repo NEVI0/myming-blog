@@ -16,7 +16,7 @@ export default async function UserSessionLink() {
     <form action={handleUserSessionAction}>
       <button
         type="submit"
-        className="h-full flex items-center justify-center font-medium text-primary"
+        className="h-full flex items-center justify-center font-medium text-primary cursor-pointer"
       >
         Entrar em minha conta
       </button>

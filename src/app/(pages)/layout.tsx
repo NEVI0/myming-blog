@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Red_Hat_Display } from 'next/font/google';
 
+import NextTopLoader from 'nextjs-toploader';
+
 import { Header, Content, Footer } from '@app/components/common';
 import { Toast } from '@app/components/ui';
 
@@ -36,6 +38,13 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
         className={`${redHatDisplay.className} bg-color-background text-gray-950`}
         suppressHydrationWarning
       >
+        <NextTopLoader
+          color="#5644f3"
+          height={4}
+          showSpinner={false}
+          speed={500}
+        />
+
         <Header />
         <Content>{children}</Content>
         <Footer />
