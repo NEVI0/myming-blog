@@ -20,8 +20,8 @@ export default function Hero() {
       <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-[60%]">
         <SearchBox placeholder="Pesquise por um post" className="w-full" />
 
-        <Link href="/create-post" className="w-full md:w-auto">
-          <Button className="w-full">Novo post</Button>
+        <Link href="/posts" className="w-full md:w-auto">
+          <Button className="w-full">Pesquisar</Button>
         </Link>
       </div>
     </section>
