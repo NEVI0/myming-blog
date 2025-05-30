@@ -4,12 +4,16 @@ import { useState, useEffect } from 'react';
 
 import { PostAbstract } from '@domain/entities';
 import { fetchPostsAction } from '@app/actions';
-import { ANIMATIONS } from '@app/constants/animations';
 
+import { ANIMATIONS } from '@app/constants/animations';
+import { handleErrorMessage } from '@app/helpers';
+import { useToast } from '@app/hooks';
 import { Post, Section } from '@app/components/common';
 import { Animation, Button, SearchBox, Skeleton } from '@app/components/ui';
 
 export default function Content() {
+  const { toast } = useToast();
+
   const [search, setSearch] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<Omit<PostAbstract, 'toJson'>[]>([]);
@@ -18,8 +22,12 @@ export default function Content() {
     try {
       setIsLoading(true);
       const data = await fetchPostsAction({ search: searchParam });
+
       setPosts(data.posts);
     } catch (error) {
+      toast.error(
+        handleErrorMessage(error, 'Erro ao buscar posts. Tente novamente!')
+      );
     } finally {
       setIsLoading(false);
     }

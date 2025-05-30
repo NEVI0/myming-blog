@@ -7,6 +7,7 @@ import { ChevronRight } from 'lucide-react';
 
 import { POST_VALIDATION } from '@domain/entities';
 import { createPostAction } from '@app/actions';
+import { handleErrorMessage } from '@app/helpers';
 import { useToast } from '@app/hooks';
 
 import { Button, Checkbox } from '@app/components/ui';
@@ -45,12 +46,18 @@ export default function Form() {
       });
 
       if (!post) {
-        throw new Error('Erro ao criar post');
+        throw new Error('Não foi possível criar o post. Tente novamente!');
       }
+
+      toast.success(
+        'Post criado com sucesso! Você será redirecionado para a página do post...'
+      );
 
       redirectPath = `/post/${post.id}`;
     } catch (error: any) {
-      toast.error(error.message || 'Erro ao criar post');
+      toast.error(
+        handleErrorMessage(error, 'Erro ao criar post. Tente novamente!')
+      );
     } finally {
       setIsLoading(false);
       if (redirectPath) redirect(redirectPath);

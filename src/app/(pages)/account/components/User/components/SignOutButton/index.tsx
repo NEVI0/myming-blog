@@ -7,5 +7,9 @@ export default function SignOutButton() {
     await handleUserSessionAction();
   }
 
-  return <button onClick={handleSignOut}>Sair</button>;
+  return (
+    <button onClick={handleSignOut} className="cursor-pointer">
+      Sair
+    </button>
+  );
 }

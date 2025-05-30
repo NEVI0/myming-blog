@@ -5,9 +5,14 @@ import { redirect } from 'next/navigation';
 import { OctagonX } from 'lucide-react';
 
 import { deleteAccountAction } from '@app/actions';
+import { handleErrorMessage } from '@app/helpers';
+import { useToast } from '@app/hooks';
+
 import { Button, Modal } from '@app/components/ui';
 
 export default function DeleteAccountButton() {
+  const { toast } = useToast();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -18,8 +23,15 @@ export default function DeleteAccountButton() {
       setIsLoading(true);
       await deleteAccountAction();
 
+      toast.success(
+        'Conta excluída com sucesso! Você será redirecionado para a página inicial...'
+      );
+
       redirectPath = '/';
     } catch (error) {
+      toast.error(
+        handleErrorMessage(error, 'Erro ao excluir conta. Tente novamente!')
+      );
     } finally {
       setIsLoading(false);
       if (redirectPath) redirect(redirectPath);
@@ -28,7 +40,10 @@ export default function DeleteAccountButton() {
 
   return (
     <>
-      <button className="text-red-500" onClick={() => setIsModalOpen(true)}>
+      <button
+        className="text-red-500 cursor-pointer"
+        onClick={() => setIsModalOpen(true)}
+      >
         Excluir conta
       </button>
 
