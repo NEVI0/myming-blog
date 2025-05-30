@@ -1,6 +1,6 @@
 'use client';
 
-import { POST } from '@app/constants/post';
+import { POST_VALIDATION } from '@domain/entities';
 
 interface PostAuthorNoteInputProps {
   value: string | null;
@@ -18,7 +18,7 @@ export default function PostAuthorNoteInput({
       <textarea
         className="placeholder-gray-400 italic w-full md:min-w-[444px] md:h-[26px] text-center resize-none"
         placeholder="Digite aqui alguma nota de autor de seu desejo (opcional)"
-        maxLength={POST.MAX_AUTHOR_NOTE_LENGTH}
+        maxLength={POST_VALIDATION.MAX_AUTHOR_NOTE_LENGTH}
         value={value ?? ''}
         onChange={(event) => onChange(event.target.value)}
       />

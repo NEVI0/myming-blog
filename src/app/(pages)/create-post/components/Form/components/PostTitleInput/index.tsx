@@ -1,4 +1,4 @@
-import { POST } from '@app/constants/post';
+import { POST_VALIDATION } from '@domain/entities';
 
 interface PostTitleInputProps {
   value: string;
@@ -15,7 +15,7 @@ export default function PostTitleInput({
       className="text-2xl font-bold placeholder-gray-400"
       placeholder="Digite o título do seu post"
       value={value}
-      maxLength={POST.MAX_TITLE_LENGTH}
+      maxLength={POST_VALIDATION.MAX_TITLE_LENGTH}
       onChange={(event) => onChange(event.target.value)}
     />
   );

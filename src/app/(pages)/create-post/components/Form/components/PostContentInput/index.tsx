@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { POST } from '@app/constants/post';
+import { POST_VALIDATION } from '@domain/entities';
 
 interface PostContentInputProps {
   value: string;
@@ -21,7 +21,7 @@ export default function PostContentInput({
     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
   }
 
-  const isValid = value.length >= POST.MIN_CONTENT_LENGTH;
+  const isValid = value.length >= POST_VALIDATION.MIN_CONTENT_LENGTH;
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -31,14 +31,14 @@ export default function PostContentInput({
         className="placeholder-gray-400 min-h-[252px] resize-none overflow-hidden"
         placeholder="Digite aqui o conteúdo do seu post..."
         value={value}
-        minLength={POST.MIN_CONTENT_LENGTH}
+        minLength={POST_VALIDATION.MIN_CONTENT_LENGTH}
         onChange={(event) => onChange(event.target.value)}
       />
 
       <small className="text-sm text-gray-600">
         {isValid
           ? 'Quantidade mínima de caracteres atingida!'
-          : `Aumente seu conteúdo para ${POST.MIN_CONTENT_LENGTH} caracteres. No momento tem ${value.length} caracteres.`}
+          : `Aumente seu conteúdo para ${POST_VALIDATION.MIN_CONTENT_LENGTH} caracteres. No momento tem ${value.length} caracteres.`}
       </small>
     </div>
   );
