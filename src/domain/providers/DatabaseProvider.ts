@@ -36,6 +36,11 @@ export default interface DatabaseProviderAbstract {
 
   create<T>(collection: string, data: object): Promise<T>;
   updateOne<T>(collection: string, query: FindQuery, data: object): Promise<T>;
+  updateByTransaction(
+    collection: string,
+    query: FindQuery,
+    data: object
+  ): Promise<void>;
 
   deleteOne(collection: string, query: FindQuery): Promise<void>;
   deleteMany(collection: string, query: FindQuery): Promise<void>;

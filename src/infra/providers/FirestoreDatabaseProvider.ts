@@ -82,6 +82,25 @@ export default class FirestoreDatabaseProvider
     return docRef.data() as T;
   };
 
+  public updateByTransaction: DatabaseProviderAbstract['updateByTransaction'] =
+    async (collection: string, query: FindQuery, data: object) => {
+      const snapshot = await this.db
+        .collection(collection)
+        .where(query.field, query.operator, query.value)
+        .limit(1)
+        .get();
+
+      const [docRef] = snapshot.docs;
+      if (!docRef) throw Error('Database document not found!');
+
+      await this.db.runTransaction(async (transaction) => {
+        const doc = await transaction.get(docRef.ref);
+        if (!doc.exists) throw Error('Database document not found!');
+
+        transaction.update(docRef.ref, data);
+      });
+    };
+
   public deleteOne: DatabaseProviderAbstract['deleteOne'] = async (
     collection: string,
     query: FindQuery
