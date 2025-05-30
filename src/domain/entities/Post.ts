@@ -1,5 +1,17 @@
 import Author, { AuthorAbstract } from './Author';
 
+const MAX_TITLE_LENGTH = 50;
+const MAX_SUBTITLE_LENGTH = 75;
+const MIN_CONTENT_LENGTH = 400;
+const MAX_AUTHOR_NOTE_LENGTH = 50;
+
+export const POST_VALIDATION = {
+  MAX_TITLE_LENGTH,
+  MAX_SUBTITLE_LENGTH,
+  MIN_CONTENT_LENGTH,
+  MAX_AUTHOR_NOTE_LENGTH,
+};
+
 export interface PostAbstract {
   id: string;
   title: string;
