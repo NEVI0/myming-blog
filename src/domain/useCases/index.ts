@@ -6,3 +6,4 @@ export { default as FetchPostsByAuthorUseCase } from './FetchPostsByAuthorUseCas
 export { default as FetchPostsUseCase } from './FetchPostsUseCase';
 export { default as FetchUserByIdUseCase } from './FetchUserByIdUseCase';
 export { default as GivePostFeedbackUseCase } from './GivePostFeedbackUseCase';
+export { default as UpdatePostUseCase } from './UpdatePostUseCase';

@@ -8,3 +8,4 @@ export { default as fetchUserByIdAction } from './fetchUserByIdAction';
 export { default as handleUserSessionAction } from './handleUserSessionAction';
 export { default as fetchUserSession } from './fetchUserSession';
 export { default as givePostFeedbackAction } from './givePostFeedbackAction';
+export { default as updatePostAction } from './updatePostAction';

@@ -6,3 +6,4 @@ export { default as makeFetchPostsByAuthorUseCase } from './makeFetchPostsByAuth
 export { default as makeFetchPostsUseCase } from './makeFetchPostsUseCase';
 export { default as makeFetchPostByIdUseCase } from './makeFetchPostByIdUseCase';
 export { default as makeGivePostFeedbackUseCase } from './makeGivePostFeedbackUseCase';
+export { default as makeUpdatePostUseCase } from './makeUpdatePostUseCase';
