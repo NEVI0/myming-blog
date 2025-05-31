@@ -9,7 +9,7 @@ interface SocialLinkProps {
 
 export default function SocialLink({ href, icon }: SocialLinkProps) {
   return (
-    <Link href={href} target="_blank">
+    <Link href={href} target="_blank" rel="noopener noreferrer">
       <IconButton icon={icon} />
     </Link>
   );
