@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { fetchUserSession } from '@app/actions';
 
 import { Breadcrumb } from '@app/components/ui';
-import { Form } from './components';
+import { Form } from './_components';
 
 export default async function CreatePost() {
   const session = await fetchUserSession();

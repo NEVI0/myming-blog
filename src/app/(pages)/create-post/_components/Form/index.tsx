@@ -10,13 +10,8 @@ import { createPostAction } from '@app/actions';
 import { handleErrorMessage } from '@app/helpers';
 import { useToast } from '@app/hooks';
 
+import { PostForm } from '@app/components/common';
 import { Button, Checkbox } from '@app/components/ui';
-import {
-  PostTitleInput,
-  PostSubtitleInput,
-  PostContentInput,
-  PostAuthorNoteInput,
-} from './components';
 
 export default function Form() {
   const router = useRouter();
@@ -72,15 +67,19 @@ export default function Form() {
       <section className="flex flex-col gap-16">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-2">
-            <PostTitleInput value={title} onChange={setTitle} />
-            <PostSubtitleInput value={subtitle ?? ''} onChange={setSubtitle} />
+            <PostForm.TitleInput value={title} onChange={setTitle} />
+
+            <PostForm.SubtitleInput
+              value={subtitle ?? ''}
+              onChange={setSubtitle}
+            />
           </div>
 
-          <PostContentInput value={content} onChange={setContent} />
+          <PostForm.ContentInput value={content} onChange={setContent} />
         </div>
 
         <div className="flex justify-end">
-          <PostAuthorNoteInput value={note ?? ''} onChange={setNote} />
+          <PostForm.AuthorNoteInput value={note ?? ''} onChange={setNote} />
         </div>
       </section>
 
