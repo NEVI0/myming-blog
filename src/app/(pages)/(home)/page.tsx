@@ -1,4 +1,4 @@
-import { Hero, MostLikedPosts, About } from './components';
+import { Hero, MostLikedPosts, About } from './_components';
 
 export default function Home() {
   return (

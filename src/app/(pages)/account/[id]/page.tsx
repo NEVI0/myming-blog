@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { fetchUserByIdAction } from '@app/actions';
 
 import { Breadcrumb } from '@app/components/ui';
-import { User, Posts } from '../components';
+import { User, Posts } from '../_components';
 
 interface ParamsAbstract {
   id: string;
