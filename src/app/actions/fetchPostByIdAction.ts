@@ -17,7 +17,6 @@ export default async function fetchPostByIdAction(params: FetchPostByIdDTO) {
     if (!post) return { post: null };
     return { post: post.toJson() };
   } catch (error) {
-    console.log(error);
     return { post: null };
   }
 }

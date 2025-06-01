@@ -13,7 +13,9 @@ export default async function deletePostByIdAction(params: DeletePostByIdDTO) {
   try {
     const dto = schema.parse(params);
     await makeDeletePostByIdUseCase().execute(dto);
+
+    return { success: true };
   } catch (error) {
-    console.log({ error });
+    return { success: false };
   }
 }
