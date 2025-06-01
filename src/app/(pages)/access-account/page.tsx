@@ -30,9 +30,11 @@ export default function AccessAccount() {
           </Button>
         </Link>
 
-        <Button className="w-[160px]" onClick={handleUserSessionAction}>
-          Acessar conta
-        </Button>
+        <form action={handleUserSessionAction}>
+          <Button type="submit" className="w-[160px]">
+            Acessar conta
+          </Button>
+        </form>
       </div>
     </section>
   );
