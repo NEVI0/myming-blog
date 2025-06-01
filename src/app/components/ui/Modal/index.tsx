@@ -20,6 +20,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     document.body.style.overflow = isOpen ? 'hidden' : 'auto';
   }, [isOpen]);
 

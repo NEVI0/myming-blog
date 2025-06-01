@@ -7,6 +7,8 @@ interface ParamsAbstract {
 
 export default function useOnClickOutside({ ref, handler }: ParamsAbstract) {
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const listener = (event: MouseEvent | TouchEvent) => {
       const target = event?.target as HTMLElement;
 
