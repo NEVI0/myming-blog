@@ -1,6 +1,8 @@
 import 'server-only';
 
-type FindQueryOperator =
+export type OrderByDirection = 'asc' | 'desc';
+
+export type FilterQueryOperator =
   | '=='
   | '!='
   | '>'
@@ -12,37 +14,67 @@ type FindQueryOperator =
   | 'in'
   | 'not-in';
 
-export interface FindQuery {
+export interface FilterQuery {
   field: string;
-  operator: FindQueryOperator;
+  operator: FilterQueryOperator;
   value: string | number | boolean;
 }
 
-export default interface DatabaseProviderAbstract {
-  find<T>(
-    collection: string,
-    query?: FindQuery | FindQuery[]
-  ): {
-    data(): Promise<T[] | null>;
-    paginated(
-      limit?: number,
-      page?: number
-    ): Promise<{
-      data: T[] | null;
-      page: number;
-    }>;
+interface FilterSubMethods<T> {
+  limit(limit: number): {
+    execute: () => Promise<T>;
   };
-  findReference<T>(collection: string, referenceId: string): Promise<T | null>;
 
+  orderBy(
+    field: string,
+    direction?: OrderByDirection
+  ): {
+    limit: (limit: number) => {
+      execute: () => Promise<T>;
+    };
+    execute: () => Promise<T>;
+  };
+
+  where(query: FilterQuery | FilterQuery[]): {
+    limit: (limit: number) => {
+      execute: () => Promise<T>;
+    };
+    orderBy: (
+      field: string,
+      direction?: OrderByDirection
+    ) => {
+      limit: (limit: number) => {
+        execute: () => Promise<T>;
+      };
+      execute: () => Promise<T>;
+    };
+    execute: () => Promise<T>;
+  };
+}
+
+interface FindSubMethods<T> extends FilterSubMethods<T> {
+  execute(): Promise<T>;
+}
+
+interface UpdateSubMethods<T> extends FilterSubMethods<T> {
+  execute(data: object): Promise<T>;
+}
+
+interface DeleteSubMethods<T> extends FilterSubMethods<T> {
+  execute(): Promise<T>;
+}
+
+export default interface DatabaseProviderAbstract {
+  find<T>(collection: string): FindSubMethods<T>;
   create<T>(collection: string, data: object): Promise<T>;
-  updateOne<T>(collection: string, query: FindQuery, data: object): Promise<T>;
+  update<T>(collection: string, data: object): UpdateSubMethods<T>;
+  delete<T>(collection: string): DeleteSubMethods<T>;
+
+  findReference<T>(collection: string, referenceId: string): Promise<T | null>;
   updateByTransaction(
     collection: string,
-    query: FindQuery,
+    query: FilterQuery,
     data: object
   ): Promise<void>;
-
-  deleteOne(collection: string, query: FindQuery): Promise<void>;
-  deleteMany(collection: string, query: FindQuery): Promise<void>;
-  deleteByReference(collection: string, referenceId: string): Promise<void>;
+  deleteReference(collection: string, referenceId: string): Promise<void>;
 }

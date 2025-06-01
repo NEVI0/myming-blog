@@ -4,7 +4,7 @@ import { Post, PostAbstract } from '@domain/entities';
 import { PostRepositoryAbstract } from '@domain/repositories';
 import { DatabaseProviderAbstract } from '@domain/providers';
 
-import { FindQuery } from '@domain/providers/DatabaseProvider';
+import { FilterQuery } from '@domain/providers/DatabaseProvider';
 import { FindAllFilters } from '@domain/repositories/PostRepository';
 
 const POST_COLLECTION_NAME = 'posts';
@@ -16,25 +16,27 @@ export default class PostRepository implements PostRepositoryAbstract {
     const query = this.buildQueryParams(filters);
 
     const posts = await this.databaseProvider
-      .find<PostAbstract>(POST_COLLECTION_NAME, query)
-      .data();
+      .find<PostAbstract[]>(POST_COLLECTION_NAME)
+      .where(query)
+      .execute();
 
     if (!posts || posts.length === 0) return [];
     return posts.map((post) => new Post(post));
   };
 
   public findById: PostRepositoryAbstract['findById'] = async (id) => {
-    const query: FindQuery = {
+    const query: FilterQuery = {
       field: 'id',
       operator: '==',
       value: id,
     };
 
     const posts = await this.databaseProvider
-      .find<PostAbstract>(POST_COLLECTION_NAME, query)
-      .data();
+      .find<PostAbstract[]>(POST_COLLECTION_NAME)
+      .where(query)
+      .execute();
 
-    if (!posts || posts.length === 0) return null;
+    if (!posts.length) return null;
     return new Post(posts[0]);
   };
 
@@ -48,31 +50,34 @@ export default class PostRepository implements PostRepositoryAbstract {
   };
 
   public update: PostRepositoryAbstract['update'] = async (post) => {
-    const updatedPost = await this.databaseProvider.updateOne<PostAbstract>(
-      POST_COLLECTION_NAME,
-      {
+    const updatedPost = await this.databaseProvider
+      .update<PostAbstract>(POST_COLLECTION_NAME, post.toJson())
+      .where({
         field: 'id',
         operator: '==',
         value: post.id,
-      },
-      post.toJson()
-    );
+      })
+      .execute();
 
     return new Post(updatedPost);
   };
 
   public deleteById: PostRepositoryAbstract['deleteById'] = async (id) => {
-    await this.databaseProvider.deleteOne(POST_COLLECTION_NAME, {
-      field: 'id',
-      operator: '==',
-      value: id,
-    });
+    await this.databaseProvider
+      .delete<PostAbstract>(POST_COLLECTION_NAME)
+      .where({
+        field: 'id',
+        operator: '==',
+        value: id,
+      })
+      .limit(1)
+      .execute();
   };
 
   public deleteByAuthorId: PostRepositoryAbstract['deleteByAuthorId'] = async (
     id
   ) => {
-    await this.databaseProvider.deleteMany(POST_COLLECTION_NAME, {
+    await this.databaseProvider.delete(POST_COLLECTION_NAME).where({
       field: 'author.id',
       operator: '==',
       value: id,
@@ -80,7 +85,7 @@ export default class PostRepository implements PostRepositoryAbstract {
   };
 
   private buildQueryParams(filters: FindAllFilters) {
-    let query: FindQuery[] = [];
+    let query: FilterQuery[] = [];
 
     if (filters.search) {
       query.push(
@@ -111,6 +116,7 @@ export default class PostRepository implements PostRepositoryAbstract {
       });
     }
 
+    if (query.length === 1) return query[0];
     return query;
   }
 }
