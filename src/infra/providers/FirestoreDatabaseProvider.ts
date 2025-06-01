@@ -63,8 +63,8 @@ class QueryBuilder<T> {
   }
 
   public async execute(): Promise<T> {
-    const data = await this.getSnapshot();
-    return data.docs.map((doc) => doc.data()) as T;
+    const snapshot = await this.getSnapshot();
+    return snapshot.docs.map((doc) => doc.data()) as T;
   }
 }
 
@@ -94,12 +94,18 @@ class UpdateBuilder<T> extends QueryBuilder<T> {
 
   public override async execute(): Promise<T> {
     const snapshot = await this.getSnapshot();
+    if (!snapshot.docs.length) throw Error('Database document not found!');
 
-    const [docRef] = snapshot.docs;
-    if (!docRef) throw Error('Database document not found!');
+    const promises: any[] = [];
 
-    await this.db.collection(this.collection).doc(docRef.id).update(this.data);
-    return docRef.data() as T;
+    snapshot.docs.forEach((doc) => {
+      promises.push(
+        this.db.collection(this.collection).doc(doc.id).update(this.data)
+      );
+    });
+
+    await Promise.all(promises);
+    return snapshot.docs.map((doc) => doc.data()) as T;
   }
 }
 
@@ -116,12 +122,16 @@ class DeleteBuilder<T> extends QueryBuilder<T> {
 
   public override async execute(): Promise<T> {
     const snapshot = await this.getSnapshot();
+    if (!snapshot.docs.length) throw Error('Database document not found!');
 
-    const [docRef] = snapshot.docs;
-    if (!docRef) throw Error('Database document not found!');
+    const promises: any[] = [];
 
-    await this.db.collection(this.collection).doc(docRef.id).delete();
-    return docRef.data() as T;
+    snapshot.docs.forEach((doc) => {
+      promises.push(this.db.collection(this.collection).doc(doc.id).delete());
+    });
+
+    await Promise.all(promises);
+    return snapshot.docs.map((doc) => doc.data()) as T;
   }
 }
 
