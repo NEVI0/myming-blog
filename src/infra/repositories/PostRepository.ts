@@ -77,11 +77,14 @@ export default class PostRepository implements PostRepositoryAbstract {
   public deleteByAuthorId: PostRepositoryAbstract['deleteByAuthorId'] = async (
     id
   ) => {
-    await this.databaseProvider.delete(POST_COLLECTION_NAME).where({
-      field: 'author.id',
-      operator: '==',
-      value: id,
-    });
+    await this.databaseProvider
+      .delete(POST_COLLECTION_NAME)
+      .where({
+        field: 'author.id',
+        operator: '==',
+        value: id,
+      })
+      .execute();
   };
 
   private buildQueryParams(filters: FindAllFilters) {
