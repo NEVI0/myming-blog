@@ -21,8 +21,12 @@ export default function Content({ post }: ContentProps) {
         <h2 className="text-xl font-bold text-gray-600">{post.subtitle}</h2>
       </div>
 
-      <div className="flex flex-col gap-4 w-full h-fit">
-        <p className="w-full">{post.content}</p>
+      <div className="flex flex-col gap-2 w-full h-fit">
+        {post.content.split('\n').map((line, index) => (
+          <p key={index} className="w-full">
+            {line}
+          </p>
+        ))}
       </div>
 
       <div className="flex flex-col-reverse gap-8 md:flex-row md:items-center justify-between">
