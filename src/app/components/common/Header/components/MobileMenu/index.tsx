@@ -7,8 +7,15 @@ import { Menu, X } from 'lucide-react';
 
 import { IconButton } from '@app/components/ui';
 import { concatClasses } from '@app/helpers';
+import { SessionAbstract } from '@domain/entities';
 
-export default function MobileMenu() {
+import UserSessionLink from '../UserSessionLink';
+
+interface MobileMenuProps {
+  session: SessionAbstract | null;
+}
+
+export default function MobileMenu({ session }: MobileMenuProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   function handleToggleMenu() {
@@ -16,6 +23,7 @@ export default function MobileMenu() {
   }
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
   }, [isMenuOpen]);
 
@@ -62,13 +70,7 @@ export default function MobileMenu() {
             Sobre o blog
           </Link>
 
-          <Link
-            href="/account/nevio"
-            className="flex items-center  font-medium text-primary w-full h-[44px]"
-            onClick={handleToggleMenu}
-          >
-            Minha conta
-          </Link>
+          <UserSessionLink session={session} />
         </nav>
       </aside>
     </>

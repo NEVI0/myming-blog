@@ -1,14 +1,19 @@
+'use client';
+
 import Link from 'next/link';
 
-import { handleUserSessionAction, fetchUserSession } from '@app/actions';
+import { SessionAbstract } from '@domain/entities';
+import { handleUserSessionAction } from '@app/actions';
 
-export default async function UserSessionLink() {
-  const session = await fetchUserSession();
+interface UserSessionLinkProps {
+  session: SessionAbstract | null;
+}
 
+export default function UserSessionLink({ session }: UserSessionLinkProps) {
   return !!session ? (
     <Link
       href={`/account/${session.user?.id}`}
-      className="h-full flex items-center justify-center font-medium text-primary"
+      className="h-[44px] w-full md:h-full md:w-auto flex items-center justify-center font-medium text-primary"
     >
       Minha conta
     </Link>
@@ -16,7 +21,7 @@ export default async function UserSessionLink() {
     <form action={handleUserSessionAction}>
       <button
         type="submit"
-        className="h-full flex items-center justify-center font-medium text-primary cursor-pointer"
+        className="h-[44px] w-full md:h-full md:w-auto flex items-center justify-center font-medium text-primary cursor-pointer"
       >
         Entrar em minha conta
       </button>

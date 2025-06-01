@@ -1,9 +1,12 @@
 import Link from 'next/link';
 
+import { fetchUserSession } from '@app/actions';
 import { VerticalDivider } from '@app/components/ui';
 import { MobileMenu, UserSessionLink } from './components';
 
-export default function Header() {
+export default async function Header() {
+  const session = await fetchUserSession();
+
   return (
     <header className="flex items-center justify-center w-full h-[80px] border-b border-gray-300">
       <div className="flex items-center justify-between h-full w-6xl mx-auto px-6 md:px-8 ">
@@ -44,10 +47,10 @@ export default function Header() {
 
           <VerticalDivider />
 
-          <UserSessionLink />
+          <UserSessionLink session={session} />
         </nav>
 
-        <MobileMenu />
+        <MobileMenu session={session} />
       </div>
     </header>
   );
