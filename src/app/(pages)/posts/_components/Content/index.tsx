@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 import { PostAbstract } from '@domain/entities';
 import { fetchPostsAction } from '@app/actions';
@@ -14,7 +15,9 @@ import { Animation, Button, SearchBox, Skeleton } from '@app/components/ui';
 export default function Content() {
   const { toast } = useToast();
 
-  const [search, setSearch] = useState<string>('');
+  const searchParam = useSearchParams().get('search');
+
+  const [search, setSearch] = useState<string>(searchParam || '');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [posts, setPosts] = useState<Omit<PostAbstract, 'toJson'>[]>([]);
 
@@ -44,7 +47,7 @@ export default function Content() {
   }
 
   useEffect(() => {
-    handleFetchPosts('');
+    handleFetchPosts(searchParam || '');
   }, []);
 
   const notFoundPosts = !posts.length && !isLoading;

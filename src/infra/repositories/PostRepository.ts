@@ -88,18 +88,11 @@ export default class PostRepository implements PostRepositoryAbstract {
     let query: FilterQuery[] = [];
 
     if (filters.search) {
-      query.push(
-        {
-          field: 'title',
-          operator: '>=',
-          value: filters.search,
-        },
-        {
-          field: 'author.name',
-          operator: '>=',
-          value: filters.search,
-        }
-      );
+      query.push({
+        field: 'title',
+        operator: '==',
+        value: filters.search,
+      });
     }
     if (filters.public) {
       query.push({
