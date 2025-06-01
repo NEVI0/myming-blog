@@ -13,6 +13,7 @@ export interface FindAllFilters {
 export default interface PostRepositoryAbstract {
   findAll(filters: FindAllFilters): Promise<PostAbstract[]>;
   findById(id: string): Promise<PostAbstract | null>;
+  findMostRecents(): Promise<PostAbstract[]>;
 
   create(post: PostAbstract): Promise<PostAbstract>;
   update(post: PostAbstract): Promise<PostAbstract>;

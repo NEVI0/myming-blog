@@ -1,6 +1,7 @@
 export { default as createPostAction } from './createPostAction';
 export { default as deleteAccountAction } from './deleteAccountAction';
 export { default as deletePostByIdAction } from './deletePostByIdAction';
+export { default as fetchMostRecentPostsAction } from './fetchMostRecentPostsAction';
 export { default as fetchPostByIdAction } from './fetchPostByIdAction';
 export { default as fetchPostsAction } from './fetchPostsAction';
 export { default as fetchPostsByAuthorAction } from './fetchPostsByAuthorAction';

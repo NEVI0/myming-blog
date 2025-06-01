@@ -40,6 +40,18 @@ export default class PostRepository implements PostRepositoryAbstract {
     return new Post(posts[0]);
   };
 
+  public findMostRecents: PostRepositoryAbstract['findMostRecents'] =
+    async () => {
+      const posts = await this.databaseProvider
+        .find<PostAbstract[]>(POST_COLLECTION_NAME)
+        .orderBy('createdAt', 'desc')
+        .limit(8)
+        .execute();
+
+      if (!posts || posts.length === 0) return [];
+      return posts.map((post) => new Post(post));
+    };
+
   public create: PostRepositoryAbstract['create'] = async (post) => {
     const createdPost = await this.databaseProvider.create<PostAbstract>(
       POST_COLLECTION_NAME,
@@ -50,8 +62,8 @@ export default class PostRepository implements PostRepositoryAbstract {
   };
 
   public update: PostRepositoryAbstract['update'] = async (post) => {
-    const updatedPost = await this.databaseProvider
-      .update<PostAbstract>(POST_COLLECTION_NAME, post.toJson())
+    const posts = await this.databaseProvider
+      .update<PostAbstract[]>(POST_COLLECTION_NAME, post.toJson())
       .where({
         field: 'id',
         operator: '==',
@@ -59,12 +71,12 @@ export default class PostRepository implements PostRepositoryAbstract {
       })
       .execute();
 
-    return new Post(updatedPost);
+    return new Post(posts[0]);
   };
 
   public deleteById: PostRepositoryAbstract['deleteById'] = async (id) => {
     await this.databaseProvider
-      .delete<PostAbstract>(POST_COLLECTION_NAME)
+      .delete(POST_COLLECTION_NAME)
       .where({
         field: 'id',
         operator: '==',

@@ -30,7 +30,7 @@ export default function Hero() {
           onChange={(event) => setSearch(event.target.value)}
         />
 
-        <Link href={`/posts?search=${search}`} className="w-full md:w-auto">
+        <Link href={`/posts?search=${search}`} className="w-full md:w-[224px]">
           <Button className="w-full">Pesquisar</Button>
         </Link>
       </div>
