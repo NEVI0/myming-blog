@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Auth files
+firebase-mymind-blog-keys.json
+google-mymind-blog-keys.json
