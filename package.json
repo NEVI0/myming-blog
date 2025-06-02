@@ -2,6 +2,7 @@
   "name": "mymind-blog",
   "version": "0.1.0",
   "private": true,
+  "url": "https://github.com/NEVI0/mymind-blog",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
