@@ -18,6 +18,8 @@ const PATH_TRANSLATIONS: Record<string, string> = {
   'create-post': 'Novo post',
   account: 'Perfil',
   edit: 'Editar',
+  privacy: 'Política de privacidade',
+  terms: 'Termos de uso',
 };
 
 export default function Breadcrumb() {

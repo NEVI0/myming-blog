@@ -1,4 +1,4 @@
-import { Hero, MostRecentPosts, About } from './_components';
+import { Hero, MostRecentPosts, About, Links } from './_components';
 
 export default function Home() {
   return (
@@ -6,6 +6,7 @@ export default function Home() {
       <Hero />
       <MostRecentPosts />
       <About />
+      <Links />
     </>
   );
 }
